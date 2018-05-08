@@ -109,15 +109,15 @@ const NSInteger AIRMapMaxZoomLevel = 20;
     // This is where we intercept them and do the appropriate underlying mapview action.
     if ([subview isKindOfClass:[AIRMapLocalTile class]]) {
         ((AIRMapLocalTile *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview level: 0];
+        [self addOverlay:(id<MKOverlay>)subview level: 1];
     } else if ([subview isKindOfClass:[AIRMapUrlTile class]]) {
         ((AIRMapUrlTile *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview level: 0];
+        [self addOverlay:(id<MKOverlay>)subview level: 1];
     } else if ([subview isKindOfClass:[AIRMapMarker class]]) {
         [self addAnnotation:(id <MKAnnotation>) subview];
     } else if ([subview isKindOfClass:[AIRMapPolyline class]]) {
         ((AIRMapPolyline *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview level:MKOverlayLevelAboveLabels];
+        [self addOverlay:(id<MKOverlay>)subview level: 2];
     } else if ([subview isKindOfClass:[AIRMapPolygon class]]) {
         ((AIRMapPolygon *)subview).map = self;
         [self addOverlay:(id<MKOverlay>)subview];
