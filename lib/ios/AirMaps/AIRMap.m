@@ -107,25 +107,24 @@ const NSInteger AIRMapMaxZoomLevel = 20;
 - (void)insertReactSubview:(id<RCTComponent>)subview atIndex:(NSInteger)atIndex {
     // Our desired API is to pass up markers/overlays as children to the mapview component.
     // This is where we intercept them and do the appropriate underlying mapview action.
-    if ([subview isKindOfClass:[AIRMapMarker class]]) {
+    if ([subview isKindOfClass:[AIRMapLocalTile class]]) {
+        ((AIRMapLocalTile *)subview).map = self;
+        [self addOverlay:(id<MKOverlay>)subview level: 0];
+    } else if ([subview isKindOfClass:[AIRMapUrlTile class]]) {
+        ((AIRMapUrlTile *)subview).map = self;
+        [self addOverlay:(id<MKOverlay>)subview level: 0];
+    } else if ([subview isKindOfClass:[AIRMapMarker class]]) {
         [self addAnnotation:(id <MKAnnotation>) subview];
     } else if ([subview isKindOfClass:[AIRMapPolyline class]]) {
         ((AIRMapPolyline *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
+        [self addOverlay:(id<MKOverlay>)subview level:MKOverlayLevelAboveLabels];
     } else if ([subview isKindOfClass:[AIRMapPolygon class]]) {
         ((AIRMapPolygon *)subview).map = self;
         [self addOverlay:(id<MKOverlay>)subview];
     } else if ([subview isKindOfClass:[AIRMapCircle class]]) {
-        ((AIRMapCircle *)subview).map = self;
         [self addOverlay:(id<MKOverlay>)subview];
     } else if ([subview isKindOfClass:[AIRMapUrlTile class]]) {
         ((AIRMapUrlTile *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
-    } else if ([subview isKindOfClass:[AIRMapLocalTile class]]) {
-        ((AIRMapLocalTile *)subview).map = self;
-        [self addOverlay:(id<MKOverlay>)subview];
-    } else if ([subview isKindOfClass:[AIRMapOverlay class]]) {
-        ((AIRMapOverlay *)subview).map = self;
         [self addOverlay:(id<MKOverlay>)subview];
     } else {
         NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];
