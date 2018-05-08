@@ -60,6 +60,11 @@
     [self update];
 }
 
+- (void)setGeodesic:(BOOL)geodesic {
+    _geodesic = geodesic;
+    [self update];
+}
+
 - (void)setCoordinates:(NSArray<AIRMapCoordinate *> *)coordinates {
     _coordinates = coordinates;
     CLLocationCoordinate2D coords[coordinates.count];
@@ -67,7 +72,11 @@
     {
         coords[i] = coordinates[i].coordinate;
     }
-    self.polyline = [MKPolyline polylineWithCoordinates:coords count:coordinates.count];
+    if (_geodesic) {
+        self.polyline = [MKGeodesicPolyline polylineWithCoordinates:coords count:coordinates.count];
+    } else {
+        self.polyline = [MKPolyline polylineWithCoordinates:coords count:coordinates.count];
+    }
     self.renderer = [self createRenderer];
     [self update];
 }
