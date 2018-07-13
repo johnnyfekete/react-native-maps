@@ -47,7 +47,7 @@
     [_map removeOverlay:self];
     [_map addOverlay:self level:MKOverlayLevelAboveRoads];
     for (id<MKOverlay> overlay in _map.overlays) {
-        if ([overlay isKindOfClass:[AIRMapUrlTile class]]) {
+        if ([overlay isKindOfClass:[AIRMapLocalTile class]]) {
             continue;
         }
         [_map removeOverlay:overlay];
