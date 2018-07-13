@@ -72,11 +72,8 @@
     {
         coords[i] = coordinates[i].coordinate;
     }
-    if (_geodesic) {
-        self.polyline = [MKGeodesicPolyline polylineWithCoordinates:coords count:coordinates.count];
-    } else {
-        self.polyline = [MKPolyline polylineWithCoordinates:coords count:coordinates.count];
-    }
+    self.polyline = [MKGeodesicPolyline polylineWithCoordinates:coords count:coordinates.count];
+
     self.renderer = [self createRenderer];
     [self update];
 }
